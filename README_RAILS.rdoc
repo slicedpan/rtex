@@ -1,0 +1,51 @@
+= RTeX for Rails
+
+== Installation
+
+  sudo gem install rtex
+  
+== Dependencies
+
+* Rails >= 3.1
+  
+== Usage
+
+Create files pdf.rtex extensions (eg, index.pdf.rtex) using standard LaTeX markup.
+
+* Layouts are supported, eg: application.pdf.rtex
+* Partials are supported, eg: _item.pdf.rtex
+
+=== Example
+
+With the following:
+
+  # In config/initializers/mime_types.rb (or environment.rb in older Rails)
+  Mime::Type.register "application/pdf", :pdf
+
+  # app/controllers/items_controller.rb
+  def index
+    @items = Item.find(:all)
+    respond_to do |format|
+      format.html # We support the normal HTML view as well
+      format.pdf
+    end
+  end
+  
+  # app/views/items/index.pdf.rtex
+  \section*{Items}
+  \begin{itemize}
+    <%= render :partial => @items %>
+  \end{itemize}
+  
+  # app/views/items/_item.pdf.rtex
+  \item <%=l item.name %> \\
+  
+  # app/layouts/application.pdf.rtex
+  \documentclass[12pt]{article}
+  \begin{document}
+    <%= yield %>
+  \end{document}
+
+If you hit /items.pdf, you end up with a nice PDF listing of items.
+
+Obviously a simplistic example.
