@@ -17,7 +17,7 @@ module RTeX
     end
     initializer "rtex.set_assets_dir" do
       ActiveSupport.on_load(:action_controller) do
-        RTeX::Helpers.set_path Rails.root.join("report")
+        RTeX::Helpers.set_assets_path Rails.root.join("report")
       end
     end
   end
