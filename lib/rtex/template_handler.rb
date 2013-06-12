@@ -17,7 +17,7 @@ module RTeX
       if Thread.current[:_rendering_rtex] == true
         puts "rendering with rtex"
         Thread.current[:_rendering_rtex] = false
-        options ||= {}
+	options = {} if options.class != Hash        
         Document.new(orig, options.merge(:processed => true)).to_pdf do |f|
           serve_file = Tempfile.new('rtex-pdf')
           FileUtils.mv f, serve_file.path
