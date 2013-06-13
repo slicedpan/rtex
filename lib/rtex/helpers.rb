@@ -6,5 +6,8 @@ module RTeX
     def report_image_path filename
       @@path.join("images", filename)
     end
+    def latex_escape(*args)
+      RTeX::Document.escape(*args)
+    end
   end
 end
