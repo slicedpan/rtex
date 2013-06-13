@@ -9,5 +9,6 @@ module RTeX
     def latex_escape(*args)
       RTeX::Document.escape(*args)
     end
+    alias :tex :latex_escape
   end
 end
