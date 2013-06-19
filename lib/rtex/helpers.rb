@@ -7,7 +7,7 @@ module RTeX
       @@path.join("images", filename)
     end
     def latex_escape(*args)
-      RTeX::Document.escape(*args)
+      RTeX::Document.escape(*args).html_safe
     end
     alias :tex :latex_escape
   end
