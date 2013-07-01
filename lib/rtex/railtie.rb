@@ -23,5 +23,10 @@ module RTeX
     initializer "rtex.set_auto_delete" do
       RTeX::Tempdir.auto_delete = false if Rails.env.development?
     end
+    initializer "rtex.read_config" do
+      unless Settings.nil? || Settings.rtex.nil?
+        RTeX::Document.options.merge(Settings.rtex)    
+      end
+    end
   end
 end

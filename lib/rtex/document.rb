@@ -14,8 +14,7 @@ module RTeX
     # [+:preprocessor+] Executable to use during preprocessing (generating TOCs, etc). Default is +latex+
     # [+:shell_redirect+] Option redirection for shell output (eg, +"> /dev/null 2>&1"+ ). Default is +nil+.
     # [+:tmpdir+] Location of temporary directory (default: +Dir.tmpdir+)
-    def self.options
-      @options ||= {
+    @@options = {
         :preprocessor => 'latex',
         :preprocess => false,
         :processor => 'pdflatex',
@@ -23,15 +22,14 @@ module RTeX
         :shell_redirect => nil,
         # Temporary Directory
         :tempdir => Dir.tmpdir
+        :cli_arguments => ["--interaction=nonstopmode"]
       }
-    end
-
-    def self.cli_options
-      @cli_options ||= ["--interaction=nonstopmode"]
+    def self.options
+      @@options 
     end
         
     def initialize(content, options={})
-      @options = self.class.options.merge(options)
+      @options = @@options.merge(options)
       if @options[:processed]
         @source = content
       else
@@ -116,7 +114,7 @@ module RTeX
     end
     
     def process!
-      unless `#{processor} #{cli_options.join(" ")} '#{source_file}' #{@options[:shell_redirect]}`
+      unless `#{processor} #{@options[:cli_arguments].join(" ")} '#{source_file}' #{@options[:shell_redirect]}`
         raise GenerationError, "Could not generate PDF using #{processor}"      
       end
     end
