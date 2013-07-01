@@ -25,7 +25,11 @@ module RTeX
     end
     initializer "rtex.read_config" do
       ActiveSupport.on_load(:action_controller) do
-        unless Settings.nil? || Settings.rtex.nil?
+        if Settings.nil? || Settings.rtex.nil?
+          puts "No settings found"
+        else
+          puts "found settings: #{Settings.rtex.inspect}"
+   
           RTeX::Document.options.merge(Settings.rtex)    
         end
       end
