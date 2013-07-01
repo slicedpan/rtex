@@ -14,7 +14,8 @@ module RTeX
     # [+:preprocessor+] Executable to use during preprocessing (generating TOCs, etc). Default is +latex+
     # [+:shell_redirect+] Option redirection for shell output (eg, +"> /dev/null 2>&1"+ ). Default is +nil+.
     # [+:tmpdir+] Location of temporary directory (default: +Dir.tmpdir+)
-    @@options = {
+    def self.options
+      @@options ||= {
         :preprocessor => 'latex',
         :preprocess => false,
         :processor => 'pdflatex',
@@ -24,12 +25,10 @@ module RTeX
         :tempdir => Dir.tmpdir,
         :cli_arguments => ["--interaction=nonstopmode"]
       }
-    def self.options
-      @@options 
     end
         
     def initialize(content, options={})
-      @options = @@options.merge(options)
+      @options = self.class.options.merge(options)
       if @options[:processed]
         @source = content
       else
