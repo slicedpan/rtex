@@ -20,5 +20,8 @@ module RTeX
         RTeX::Helpers.set_assets_path Rails.root.join("report")
       end
     end
+    initializer "rtex.set_auto_delete" do
+      RTeX::Tempdir.auto_delete = false if Rails.env.development?
+    end
   end
 end

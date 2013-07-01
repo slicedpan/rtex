@@ -2,6 +2,12 @@
 module RTeX
   
   class Tempdir #:nodoc:
+
+    @@auto_delete = true
+
+    def self.auto_delete=(val)
+      @@auto_delete = val
+    end
         
     def self.open(parent_path=RTeX::Document.options[:tempdir])
       tempdir = new(parent_path)
@@ -11,7 +17,7 @@ module RTeX
       end
       # We don't remove the temporary directory when exceptions occur,
       # so that the source of the exception can be dubbed (logfile kept)
-      tempdir.remove!
+      tempdir.remove! if @@auto_delete
       result
     end
     
