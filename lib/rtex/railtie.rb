@@ -29,7 +29,7 @@ module RTeX
           puts "No settings found"
         else
           puts "found settings: #{Settings.rtex.inspect}"   
-          RTeX::Document.options.merge(Settings.rtex)
+          RTeX::Document.options.merge!(Settings.rtex)
           puts "current settings: #{RTeX::Document.options}"    
         end
       end
