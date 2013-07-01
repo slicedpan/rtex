@@ -113,6 +113,7 @@ module RTeX
     end
     
     def process!
+      puts "processing with #{processor}, arguments: #{@options[:cli_arguments].join(" ")}"
       unless `#{processor} #{@options[:cli_arguments].join(" ")} '#{source_file}' #{@options[:shell_redirect]}`
         raise GenerationError, "Could not generate PDF using #{processor}"      
       end
