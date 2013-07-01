@@ -25,6 +25,10 @@ module RTeX
         :tempdir => Dir.tmpdir
       }
     end
+
+    def self.cli_options
+      @cli_options ||= ["--interaction=nonstopmode"]
+    end
         
     def initialize(content, options={})
       @options = self.class.options.merge(options)
@@ -112,7 +116,7 @@ module RTeX
     end
     
     def process!
-      unless `#{processor} --interaction=nonstopmode '#{source_file}' #{@options[:shell_redirect]}`
+      unless `#{processor} #{cli_options.join(" ")} '#{source_file}' #{@options[:shell_redirect]}`
         raise GenerationError, "Could not generate PDF using #{processor}"      
       end
     end
