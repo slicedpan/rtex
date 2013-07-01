@@ -21,7 +21,7 @@ module RTeX
         # 
         :shell_redirect => nil,
         # Temporary Directory
-        :tempdir => Dir.tmpdir
+        :tempdir => Dir.tmpdir,
         :cli_arguments => ["--interaction=nonstopmode"]
       }
     def self.options
