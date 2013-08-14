@@ -13,9 +13,9 @@ module RTeX
     end
 
     def render_with_rtex(options = nil, *args, &block)
+      puts "rtex options: #{options}"
       orig = render_without_rtex(options, *args, &block)
       if Thread.current[:_rendering_rtex] == true
-        puts "rendering with rtex"
         Thread.current[:_rendering_rtex] = false
 	options = {} if options.class != Hash        
         Document.new(orig, options.merge(:processed => true)).to_pdf do |f|
